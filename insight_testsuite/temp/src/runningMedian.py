@@ -7,7 +7,7 @@ class median:
 
 	def add(self,hash,key,subkey,amount):
 
-		# print hash
+	
 		if len(hash[key][subkey]["maxH"]) == 0:
 			heapq.heappush(hash[key][subkey]["maxH"],-1*amount)
 			return
