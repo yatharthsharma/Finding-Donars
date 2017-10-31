@@ -11,9 +11,6 @@ class mainInterface:
 
 	def __init__(self, inputFile,outputZip,outputDate):
 
-		millisS = int(round(time.time() * 1000))
-
-
 		self.fileReader = fileReader(inputFile)
 		
 		#Instance of median class from runningMedianfile
@@ -31,7 +28,6 @@ class mainInterface:
 		# runs the calculateMedian() which calls everyother code
 		self.calculateMedian()
 		
-
 		# writing to file
 		fw = fileWriter(self.cmteZipWriter,outputZip)
 		self.writeCmteDateFile(outputDate,self.cmte)
@@ -39,9 +35,6 @@ class mainInterface:
 
 		millisE= int(round(time.time() * 1000))
 		
-		print (millisE-millisS)/1000.0
-	
-		# print len(self.cmte)
 
 
 	def writeCmteDateFile(self,filename,hash):
@@ -124,9 +117,6 @@ class mainInterface:
 			saveObj = "|".join([col[0],str(zipCode),str(self.runningMed.getMedian(self.cmte,col[0],zipCode)),str(self.cmte[col[0]][zipCode]['nTrans']),str(int(self.cmte[col[0]][zipCode]['tAmt']))])
 			self.cmteZipWriter.append(saveObj)
 
-			#TODO: check if this is efficient or not
-			# fileW.write("%s\n" %saveObj)
-			# zip_file.write(saveObj)
 
 
 
@@ -140,17 +130,16 @@ class mainInterface:
 			col = row.split("|")
 
 			# Checking if line is valid according to CMTE_ID, Others_ID and Transaction Amount
-			# TODO : check if col[15] = ' ' is valid or not
 
 			if col[15] or col[0].strip() == "" or col[14].strip() == "":
-				try:
-					val = float(col[14])
-				except:
-					continue
+				continue
+			try:
+				val = float(col[14])
+			except:
+				print "GOT a string instead of a numeric value check!!..skipping"
 				continue
 			zipCode = col[10][0:5]
 			if len(zipCode)==5 and zipCode.isdigit():
-				#TODO check if hashing will be efficent or not
 				self.calculateZipMedian(col,zipCode)
 
 
@@ -169,6 +158,7 @@ if __name__ == "__main__":
 	if len(sys.argv)!=4:
 		print "invalid number of arguments need 4.. args - input_file, output_file1, output_file2"
 		exit(1)
+
 
 	mainInterface(sys.argv[1],sys.argv[2],sys.argv[3])
 

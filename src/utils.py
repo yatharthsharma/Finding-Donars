@@ -1,5 +1,3 @@
-from datetime import datetime
-# import re
 import collections
 
 def fileReader(file_name):
@@ -20,13 +18,9 @@ def fileWriter(obj,file_name):
 	try:
 	
 		fileW = open(file_name,"w").write('\n'.join(obj).strip())
-	
-			
 	except IOError:
 		print "Output file not found. Please check the input path"
 
-# def fileClose(fileW):
-# 	fileW.close()
 
 def validateDate(year,mm,dd,fullD):
 	"""

@@ -133,11 +133,11 @@ class mainInterface:
 			# Checking if line is valid according to CMTE_ID, Others_ID and Transaction Amount
 
 			if col[15] or col[0].strip() == "" or col[14].strip() == "":
-				try:
-					val = float(col[14])
-				except:
-
-					continue
+				continue
+			try:
+				val = float(col[14])
+			except:
+				print "GOT a string instead of a numeric value check!!..continuing"
 				continue
 			zipCode = col[10][0:5]
 			if len(zipCode)==5 and zipCode.isdigit():
